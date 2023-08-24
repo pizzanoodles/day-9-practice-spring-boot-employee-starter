@@ -42,4 +42,21 @@ public class CompanyServiceTest {
         //then
         assertEquals(companies, companiesResponse);
     }
+    @Test
+    void should_return_companies_by_page_when_find_by_page_given_some_companies() {
+        //given
+        Company company1 = new Company(1L, "Orient Overseas Container Line.");
+        Company company2 = new Company(2L, "COSCO Shipping Lines");
+        Company company3 = new Company(3L, "Thoughtworks");
+        List<Company> companies = List.of(company1, company2, company3);
+        Page<Company> firstTwoCompanies = new PageImpl<>(List.of(company1, company2));
+        Integer pageNumber = 1;
+        Integer pageSize = 2;
+        when(companyJpaRepository.findAll(PageRequest.of(pageNumber - 1, pageSize))).thenReturn(firstTwoCompanies);
+        //when
+        List<Company> employeesByPageResponse = companyService.findByPage(pageNumber, pageSize);
+        //then
+        assertEquals(firstTwoCompanies.toList(), employeesByPageResponse);
+        assertNotEquals(companies, employeesByPageResponse);
+    }
 }
