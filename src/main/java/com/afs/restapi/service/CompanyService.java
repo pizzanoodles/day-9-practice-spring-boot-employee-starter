@@ -19,6 +19,7 @@ public class CompanyService {
         this.companyJpaRepository = companyJpaRepository;
         this.employeeJpaRepository = employeeJpaRepository;
     }
+
     public List<Company> findAll() {
         return companyJpaRepository.findAll();
     }
