@@ -38,6 +38,7 @@ public class EmployeeServiceTest {
         //then
         assertEquals(employees, allEmployeesResponse);
     }
+
     @Test
     void should_return_specific_employee_when_find_by_id_given_employee_id() {
         //given
@@ -47,4 +48,17 @@ public class EmployeeServiceTest {
         Employee employeeResponse = employeeService.findById(employee.getId());
         //then
         assertEquals(employee, employeeResponse);
+    }
+
+    @Test
+    void should_return_updated_employee_when_update_given_employee_id_and_updated_info() {
+        //given
+        Employee oldEmployee = new Employee(1L, "Jack", 23, "Male", 50000);
+        Employee newEmployee = new Employee(1L, "Jack", 24, "Male", 55000);
+        when(employeeJpaRepository.findById(oldEmployee.getId())).thenReturn(Optional.of(oldEmployee));
+        //when
+        employeeService.update(oldEmployee.getId(), newEmployee);
+        //then
+        verify(employeeJpaRepository, times(1)).save(oldEmployee);
+    }
 }
