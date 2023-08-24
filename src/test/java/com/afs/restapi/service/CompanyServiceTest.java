@@ -91,4 +91,24 @@ public class CompanyServiceTest {
         //then
         assertEquals(savedCompany, createdCompanyResponse);
     }
+    @Test
+    void should_return_list_of_employees_under_company_when_find_employees_by_company_id_given_company_id() {
+        //given
+        Employee employee1 = new Employee(1L, "Robert", 19, "Male", 40000);
+        Employee employee2 = new Employee(2L, "Madeline", 24, "Female", 50000);
+        Employee employee3 = new Employee(3L, "Elizabeth", 22, "Female", 120000);
+        Company company = new Company(1L, "Orient Overseas Container Line");
+        Long companyId = company.getId();
+        employee1.setCompanyId(companyId);
+        employee2.setCompanyId(companyId);
+        employee3.setCompanyId(2L);
+        List<Employee> employees = List.of(employee1, employee2, employee3);
+        List<Employee> employeesUnderOOCL = List.of(employee1, employee2);
+        when(employeeJpaRepository.findByCompanyId(companyId)).thenReturn(employeesUnderOOCL);
+        //when
+        List<Employee> employeesByCompanyIdResponse = companyService.findEmployeesByCompanyId(companyId);
+        //then
+        assertEquals(employeesUnderOOCL, employeesByCompanyIdResponse);
+        assertNotEquals(employees, employeesByCompanyIdResponse);
+    }
 }
