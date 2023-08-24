@@ -108,4 +108,13 @@ public class EmployeeServiceTest {
         assertNotEquals(allEmployees, employeesByPageResponse);
     }
 
+    @Test
+    void should_delete_employee_when_delete_given_employee_id_of_employee_to_be_deleted() {
+        //given
+        Employee employee = new Employee(1L, "Jens", 23, "Male", 100000);
+        //when
+        employeeService.delete(employee.getId());
+        //then
+        verify(employeeJpaRepository, times(1)).deleteById(employee.getId());
+    }
 }
