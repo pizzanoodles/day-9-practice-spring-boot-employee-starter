@@ -59,4 +59,14 @@ public class CompanyServiceTest {
         assertEquals(firstTwoCompanies.toList(), employeesByPageResponse);
         assertNotEquals(companies, employeesByPageResponse);
     }
+    @Test
+    void should_return_specific_company_when_find_by_id_given_employee_id() {
+        //given
+        Company company = new Company(1L, "Orient Overseas Container Line");
+        when(companyJpaRepository.findById(company.getId())).thenReturn(Optional.of(company));
+        //when
+        Company companyByIdResponse = companyService.findById(company.getId());
+        //then
+        assertEquals(company, companyByIdResponse);
+    }
 }
