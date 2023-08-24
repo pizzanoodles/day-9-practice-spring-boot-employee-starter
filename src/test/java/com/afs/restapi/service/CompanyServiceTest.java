@@ -111,4 +111,13 @@ public class CompanyServiceTest {
         assertEquals(employeesUnderOOCL, employeesByCompanyIdResponse);
         assertNotEquals(employees, employeesByCompanyIdResponse);
     }
+    @Test
+    void should_delete_company_when_delete_company_given_company_id_to_be_deleted() {
+        //given
+        Company companyToBeDeleted = new Company(1L, "Orient Overseas Container Line");
+        //when
+        companyService.delete(companyToBeDeleted.getId());
+        //then
+        verify(companyJpaRepository, times(1)).deleteById(companyToBeDeleted.getId());
+    }
 }
