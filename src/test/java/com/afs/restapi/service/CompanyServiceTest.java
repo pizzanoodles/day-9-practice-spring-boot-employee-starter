@@ -42,6 +42,7 @@ public class CompanyServiceTest {
         //then
         assertEquals(companies, companiesResponse);
     }
+
     @Test
     void should_return_companies_by_page_when_find_by_page_given_some_companies() {
         //given
@@ -59,6 +60,7 @@ public class CompanyServiceTest {
         assertEquals(firstTwoCompanies.toList(), employeesByPageResponse);
         assertNotEquals(companies, employeesByPageResponse);
     }
+
     @Test
     void should_return_specific_company_when_find_by_id_given_employee_id() {
         //given
@@ -69,6 +71,7 @@ public class CompanyServiceTest {
         //then
         assertEquals(company, companyByIdResponse);
     }
+
     @Test
     void should_return_updated_company_when_update_given_company_id_and_updated_company_info() {
         //given
@@ -80,6 +83,7 @@ public class CompanyServiceTest {
         //then
         verify(companyJpaRepository, times(1)).save(companyToBeUpdated);
     }
+
     @Test
     void should_return_created_company_when_create_given_new_company() {
         //given
@@ -91,6 +95,7 @@ public class CompanyServiceTest {
         //then
         assertEquals(savedCompany, createdCompanyResponse);
     }
+
     @Test
     void should_return_list_of_employees_under_company_when_find_employees_by_company_id_given_company_id() {
         //given
@@ -111,6 +116,7 @@ public class CompanyServiceTest {
         assertEquals(employeesUnderOOCL, employeesByCompanyIdResponse);
         assertNotEquals(employees, employeesByCompanyIdResponse);
     }
+
     @Test
     void should_delete_company_when_delete_company_given_company_id_to_be_deleted() {
         //given
