@@ -69,4 +69,15 @@ public class CompanyServiceTest {
         //then
         assertEquals(company, companyByIdResponse);
     }
+    @Test
+    void should_return_updated_company_when_update_given_company_id_and_updated_company_info() {
+        //given
+        Company companyToBeUpdated = new Company(1L, "Asus");
+        Company updatedCompany = new Company(1L, "Asrock");
+        when(companyJpaRepository.findById(companyToBeUpdated.getId())).thenReturn(Optional.of(companyToBeUpdated));
+        //when
+        companyService.update(companyToBeUpdated.getId(), updatedCompany);
+        //then
+        verify(companyJpaRepository, times(1)).save(companyToBeUpdated);
+    }
 }
