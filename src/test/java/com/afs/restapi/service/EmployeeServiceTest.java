@@ -4,12 +4,16 @@ import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.EmployeeJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
     private EmployeeService employeeService;
@@ -34,4 +38,13 @@ public class EmployeeServiceTest {
         //then
         assertEquals(employees, allEmployeesResponse);
     }
+    @Test
+    void should_return_specific_employee_when_find_by_id_given_employee_id() {
+        //given
+        Employee employee = new Employee(1L, "Joe Mama", 40, "Male", 5000);
+        when(employeeJpaRepository.findById(employee.getId())).thenReturn(Optional.of(employee));
+        //when
+        Employee employeeResponse = employeeService.findById(employee.getId());
+        //then
+        assertEquals(employee, employeeResponse);
 }
