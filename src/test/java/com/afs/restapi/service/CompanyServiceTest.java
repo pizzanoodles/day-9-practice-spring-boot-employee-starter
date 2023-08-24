@@ -80,4 +80,15 @@ public class CompanyServiceTest {
         //then
         verify(companyJpaRepository, times(1)).save(companyToBeUpdated);
     }
+    @Test
+    void should_return_created_company_when_create_given_new_company() {
+        //given
+        Company companyToBeCreated = new Company(null, "Orient Overseas Container Line");
+        Company savedCompany = new Company(1L, "Orient Overseas Container Line");
+        when(companyJpaRepository.save(companyToBeCreated)).thenReturn(savedCompany);
+        //when
+        Company createdCompanyResponse = companyService.create(companyToBeCreated);
+        //then
+        assertEquals(savedCompany, createdCompanyResponse);
+    }
 }
