@@ -90,4 +90,22 @@ public class EmployeeServiceTest {
         assertEquals(savedEmployee, employeeResponse);
     }
 
+    @Test
+    void should_return_list_of_employee_by_page_when_find_by_page_given_some_employees() {
+        //given
+        Employee employee1 = new Employee(1L, "Robert", 19, "Male", 40000);
+        Employee employee2 = new Employee(2L, "Madeline", 24, "Female", 50000);
+        Employee employee3 = new Employee(3L, "Elizabeth", 22, "Female", 120000);
+        Page<Employee> firstTwoEmployees = new PageImpl<>(List.of(employee1, employee2));
+        List<Employee> allEmployees = List.of(employee1, employee2, employee3);
+        Integer pageNumber = 1;
+        Integer pageSize = 2;
+        when(employeeJpaRepository.findAll(PageRequest.of(pageNumber - 1, pageSize))).thenReturn(firstTwoEmployees);
+        //when
+        List<Employee> employeesByPageResponse = employeeService.findByPage(pageNumber, pageSize);
+        //then
+        assertEquals(firstTwoEmployees.toList(), employeesByPageResponse);
+        assertNotEquals(allEmployees, employeesByPageResponse);
+    }
+
 }
