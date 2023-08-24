@@ -78,4 +78,16 @@ public class EmployeeServiceTest {
         assertEquals(femaleEmployees, femaleEmployeesResponse);
     }
 
+    @Test
+    void should_return_created_employee_when_create_given_new_employee() {
+        //given
+        Employee toBeCreatedEmployee = new Employee(null, "Jens", 23, "Male", 100000);
+        Employee savedEmployee = new Employee(1L, "Jens", 23, "Male", 100000);
+        when(employeeJpaRepository.save(toBeCreatedEmployee)).thenReturn(savedEmployee);
+        //when
+        Employee employeeResponse = employeeService.create(toBeCreatedEmployee);
+        //then
+        assertEquals(savedEmployee, employeeResponse);
+    }
+
 }
