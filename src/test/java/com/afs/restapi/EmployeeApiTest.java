@@ -58,14 +58,14 @@ class EmployeeApiTest {
     @Test
     void should_create_employee() throws Exception {
         Employee employee = getEmployeeBob();
-
+        employeeJpaRepository.save(employee);
         ObjectMapper objectMapper = new ObjectMapper();
         String employeeRequest = objectMapper.writeValueAsString(employee);
         mockMvc.perform(post("/employees")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(employeeRequest))
                 .andExpect(MockMvcResultMatchers.status().is(201))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(employee.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(employee.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(employee.getAge()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(employee.getGender()))
