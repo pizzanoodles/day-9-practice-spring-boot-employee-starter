@@ -61,4 +61,21 @@ public class EmployeeServiceTest {
         //then
         verify(employeeJpaRepository, times(1)).save(oldEmployee);
     }
+
+    @Test
+    void should_return_female_employees_when_find_all_by_gender_given_some_employees() {
+        //given
+        Employee employee1 = new Employee(1L, "Robert", 19, "Male", 40000);
+        Employee employee2 = new Employee(2L, "Madeline", 24, "Female", 50000);
+        Employee employee3 = new Employee(3L, "Elizabeth", 22, "Female", 120000);
+        List<Employee> allEmployees = List.of(employee1, employee2, employee3);
+        List<Employee> femaleEmployees = List.of(employee2, employee3);
+        when(employeeJpaRepository.findAllByGender("Female")).thenReturn(femaleEmployees);
+        //when
+        List<Employee> femaleEmployeesResponse = employeeService.findAllByGender("Female");
+        //then
+        assertNotEquals(allEmployees.size(), femaleEmployeesResponse.size());
+        assertEquals(femaleEmployees, femaleEmployeesResponse);
+    }
+
 }
