@@ -25,15 +25,11 @@ class EmployeeApiTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private InMemoryEmployeeRepository inMemoryEmployeeRepository;
     @Autowired
     private EmployeeJpaRepository employeeJpaRepository;
 
     @BeforeEach
     void setUp() {
-        inMemoryEmployeeRepository.clearAll();
         employeeJpaRepository.deleteAll();
     }
 
